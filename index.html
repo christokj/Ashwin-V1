@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <style>
+        /* Base Styling and Background */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #fce4ec; /* Light Pink Background */
+            color: #d81b60; /* Deep Pink Text */
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Hide overflow from confetti */
+        }
+
+        /* Container for all content */
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 90%;
+            background: rgba(255, 255, 255, 0.9); /* Slightly transparent white box */
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Main Heading Animation */
+        .birthday-text {
+            font-size: 3em; /* Larger size for impact */
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            /* Animation for pulsing/bouncing text */
+            animation: pulse 2s infinite alternate; 
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); text-shadow: 0 0 5px rgba(216, 27, 96, 0.5); }
+            100% { transform: scale(1.05); text-shadow: 0 0 15px #d81b60; }
+        }
+
+        .message {
+            font-size: 1.5em;
+            margin-top: 0;
+            color: #4a148c; /* Purple accent color */
+        }
+
+        /* Confetti Animation Layer */
+        .confetti-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Allows clicks to pass through */
+            z-index: 5;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #ffeb3b; /* Yellow */
+            opacity: 0;
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+
+        .confetti:nth-child(2n) { background-color: #f06292; } /* Pink */
+        .confetti:nth-child(3n) { background-color: #ba68c8; } /* Lavender */
+        .confetti:nth-child(5n) { width: 10px; height: 10px; } /* Vary size */
+        .confetti:nth-child(7n) { border-radius: 0; transform: rotate(45deg); } /* Square */
+
+        /* Confetti falling and rotation animation */
+        @keyframes fall {
+            0% { 
+                opacity: 1;
+                transform: translate(0, -100px) rotate(0deg); 
+            }
+            100% { 
+                opacity: 0;
+                transform: translate(var(--x-end), 100vh) rotate(var(--r-end)); 
+            }
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 600px) {
+            .birthday-text {
+                font-size: 2.5em;
+            }
+            .message {
+                font-size: 1.2em;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="confetti-layer" id="confetti-layer"></div>
+
+    <div class="container">
+        <div class="birthday-text">🎉 Happy Birthday! 🎂</div>
+        <p class="message">
+            Wishing you a day filled with joy, laughter, and everything that makes you happy!
+        </p>
+        <p class="message" style="color: #6a1b9a; font-size: 1.1em;">
+            This little website is your animated gift!
+        </p>
+    </div>
+
+    <script>
+        const confettiLayer = document.getElementById('confetti-layer');
+        const count = 50; // Number of confetti pieces
+
+        // Function to create a single confetti piece
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+
+            // Random initial position (x-axis)
+            const xPos = Math.random() * 100; 
+            // Random animation duration (to vary falling speed)
+            const duration = Math.random() * 3 + 5; // 5 to 8 seconds
+            
+            // Set animation variables for CSS
+            confetti.style.setProperty('--x-end', ${Math.random() * 200 - 100}px);
+            confetti.style.setProperty('--r-end', ${Math.random() * 360 * 5}deg);
+
+            confetti.style.left = ${xPos}vw;
+            confetti.style.animationDuration = ${duration}s;
+            confetti.style.animationDelay = -${Math.random() * 5}s; // Start some immediately
+            confettiLayer.appendChild(confetti);
+        }
+
+        // Create the initial confetti pieces
+        for (let i = 0; i < count; i++) {
+            createConfetti();
+        }
+
+    </script>
+</body>
+</html>
